@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import store from './store';
-import Search from './containers/Search'
+import Search from './containers/Search/Search'
 
 
 const App = () => (
