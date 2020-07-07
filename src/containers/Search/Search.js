@@ -1,30 +1,23 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import { connect } from 'react-redux';
+import { FiTv} from 'react-icons/fi';
 
 import SearchForm from '../../components/SearchForm';
 import SearchResults from '../../components/SearchResults';
 
 import { searchingMovies } from '../../actions/movies';
 
-import './Search.css';
-
 const Search = ({dispatch, search, data, error, isLoading, searchingMovies}) => {
-
-  const [hasError, setErrors] = useState(false);
-  const [ability, setAbility] = useState({});
-
-  // useEffect(() => {
-  //     console.log('render');
-  //     dispatch(searchingMovies('merlin'));
-  // }, [dispatch])
 
   const SearchMovie = (mov) => {
     searchingMovies(mov)
   }
   return (
     <div className="Search">
-        <div className='search__title'>
-            <h1>TVMAZE MOVIES</h1>
+        <div className='search__title text-center'>
+            <h2 className="align-items-center">
+              <span><FiTv className="text-success"/></span>
+             TVMAZE MOVIES</h2>
         </div>
       <SearchForm
         keyword={search}
@@ -40,7 +33,6 @@ const Search = ({dispatch, search, data, error, isLoading, searchingMovies}) => 
           />
           )
         }
-      <span>{JSON.stringify(data)}</span>
     </div>
   );
 }
