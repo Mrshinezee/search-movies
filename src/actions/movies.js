@@ -3,13 +3,7 @@ import {
     SEARCH_MOVIE,
     SEARCH_MOVIE_SUCCESS,
     SEARCH_MOVIE_ERROR,
-    SET_WORD,
   } from '../constants';
-
-  export const setMovieSearch = quickSearch => ({
-    type: SET_WORD,
-    quickSearch
-  })
 
   const searchingMovieRequest = () => ({
     type: SEARCH_MOVIE,
@@ -26,11 +20,9 @@ import {
   });
 
   export const searchingMovies = (movies) => dispatch => {
-      console.log('view api',API(movies) )
     dispatch(searchingMovieRequest());
     API(movies)
     .then(selected => {
-        console.log('selected', selected.data )
         dispatch(searchMovieSuccess(selected.data));
       })
       .catch(error => {
