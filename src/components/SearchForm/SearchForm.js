@@ -3,11 +3,14 @@ import PropTypes from 'prop-types'
 
 import './SearchForm.css'
 
-const WAIT_INTERVAL = 300
+const WAIT_INTERVAL = 600
 
 class SearchForm extends Component {
   constructor(props) {
     super(props)
+        this.state = {
+            movieName: '',
+          }
 
     this.handleTextChange = this.handleTextChange.bind(this)
   }
@@ -17,27 +20,27 @@ class SearchForm extends Component {
   }
 
   handleTextChange(event) {
-    const { setKeyword, searchMovie } = this.props
+    const { searchMovie } = this.props
+    this.setState({
+        movieName: event.target.value
+      });
 
     clearTimeout(this.timer)
-    setKeyword(event.target.value)
-
-    if (event.target.value.length >= 3) {
+      let movie = event.target.value
       this.timer = setTimeout(() => {
-        searchMovie()
+        searchMovie(movie)
       }, WAIT_INTERVAL)
-    }
   }
 
   render() {
-    const { keyword } = this.props
+    const { movieName } = this.state;
 
     return (
       <div className='search-form'>
         <input
           type='search'
           name='keyword'
-          value={keyword}
+          value={movieName}
           onChange={this.handleTextChange}
           placeholder='quick search'
           className='search-form__field'
@@ -48,9 +51,7 @@ class SearchForm extends Component {
 }
 
 SearchForm.propTypes = {
-  setKeyword: PropTypes.func.isRequired,
   searchMovie: PropTypes.func.isRequired,
-  keyword: PropTypes.string,
 }
 
 export default SearchForm

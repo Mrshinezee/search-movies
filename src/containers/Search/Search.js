@@ -1,11 +1,14 @@
 import React, {useState, useEffect} from "react";
 import { connect } from 'react-redux';
 
-import SearchForm from '../../components/SearchForm'
+import SearchForm from '../../components/SearchForm';
+import SearchResults from '../../components/SearchResults';
 
-import { setMovieSearch, searchingMovies } from '../../actions/movies'
+import { searchingMovies } from '../../actions/movies';
 
-const Search = ({dispatch, search, data, isLoading, setMovieSearch, searchingMovies}) => {
+import './Search.css';
+
+const Search = ({dispatch, search, data, error, isLoading, searchingMovies}) => {
 
   const [hasError, setErrors] = useState(false);
   const [ability, setAbility] = useState({});
@@ -15,29 +18,39 @@ const Search = ({dispatch, search, data, isLoading, setMovieSearch, searchingMov
   //     dispatch(searchingMovies('merlin'));
   // }, [dispatch])
 
-  const SearchMovie = () => {
-    searchingMovies(search)
- }
+  const SearchMovie = (mov) => {
+    searchingMovies(mov)
+  }
   return (
     <div className="Search">
         <div className='search__title'>
-            <h1>Tvmaze</h1>
+            <h1>TVMAZE MOVIES</h1>
         </div>
       <SearchForm
         keyword={search}
-        setKeyword={setMovieSearch}
         searchMovie={SearchMovie}
       />
+      {data
+          && (
+          <SearchResults
+            keyword={search}
+            data={data}
+            isLoading={isLoading}
+            error={error}
+          />
+          )
+        }
       <span>{JSON.stringify(data)}</span>
     </div>
   );
 }
 
 const mapStateToProps = ({
-    movies: { search, data, isLoading },
+    movies: { search, data, isLoading, error },
   }) => ({
     search,
     data,
     isLoading,
+    error,
   });
-export default connect(mapStateToProps,{ setMovieSearch,searchingMovies })(Search);
+export default connect(mapStateToProps,{ searchingMovies })(Search);
